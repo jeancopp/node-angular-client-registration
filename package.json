@@ -1,0 +1,38 @@
+{
+  "name": "teste-sitehosting",
+  "version": "1.0.0",
+  "description": "Testa para a vaga de analista desevolvedor pleno",
+  "main": "app.js",
+  "scripts": {
+    "start": "cls && nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jean Coppieters Souza <jean@coppieters.com.br>",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-load": "^1.1.15",
+    "express-validator": "^2.20.8",
+    "mysql": "^2.11.1",
+    "optional-js": "^1.1.2"
+  },
+  "server": {
+    "configuration": "./config/express",
+    "routingFile": "./app/routes/routes",
+    "port": 3000,
+    "startFunction": "./config/server-started"
+  },
+  "client": {
+    "configuration": "./config/client",
+    "port": 8080,
+    "startFunction": "./config/client-started"
+  },
+  "database": {
+    "host": "localhost",
+    "user": "root",
+    "password": "",
+    "database": "sitehosting",
+    "connectionLimit": 9999
+  }
+}
