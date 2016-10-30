@@ -4,9 +4,12 @@
 class ConfiguraExpress {
 
     constructor() {
-        this.app = require("express")();
+        var express =  require("express");
+        this.app = express();
         var bodyParser = require('body-parser');
         var validator = require("express-validator");
+
+        this.app.use(express.static('./public'));
 
         this.app.use(bodyParser.urlencoded({
             extended: true

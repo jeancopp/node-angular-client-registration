@@ -1,0 +1,82 @@
+<form novalidate name="formulario" class="row" ng-submit="submeter()">
+    <br/>
+    <div ng-show="mensagem.texto.length" class="{{mensagem.class}}">{{mensagem.texto}}</div>
+    
+    <div class="col-md-6">
+        <div ng-show="cliente.codigo">
+            <label>Código: {{cliente.codigo}}</label>
+        </div>
+        <div class="form-group">
+            <label>Nome</label>
+            <input type="text" name="nome" ng-model="cliente.nome" class="form-control" ng-maxlength="45" required>
+            <span ng-show="formulario.nome.$error.required" class="form-control alert-danger">
+                Nome obrigatório
+            </span>
+            <span ng-show="formulario.nome.$error.maxlength" class="form-control alert-danger">
+                No máximo 45 caractéres! 
+            </span>
+        </div>
+        <div id="documentos">
+            <div class="form-group">
+                <label>CPF</label>
+                <input type="text" name="cpf" ng-model="cliente.cpf" class="form-control" required pattern="\d{3}.?\d{3}.?\d{3}(\.|-|/)?\d{2}">
+                <span ng-show="formulario.cpf.$error.required" class="form-control alert-danger">
+                CPF Obrigatório
+            </span>
+                <span ng-show="formulario.cpf.$error.pattern" class="form-control alert-danger">
+                CPF Inválido
+            </span>
+            </div>
+            <div class="form-group">
+                <label>RG</label>
+                <input type="text" name="rg" ng-model="cliente.rg" class="form-control" ng-maxlength="45">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Data de Nascimento</label>
+            <input type="date" text " name="nascimento " ng-model="cliente.nascimento " class="form-control ">
+        </div>
+
+        <div class="form-group ">
+            <label>E-mail</label>
+            <input type="email " name="email " ng-model="cliente.email " class="form-control " required>
+            <span ng-show="formulario.email.$error.required " class="form-control alert-danger ">
+                E-mail Obrigatório
+            </span>
+        </div>
+        <div class="form-group ">
+            <div class="row">
+                <div class="col-lg-8"> <label>Telefone</label></div>
+                <div class="col-lg-3"> <button ng-click="add()" type="button" class="btn btn-block" >Adicionar</button></div>
+            </div>
+            <div ng-repeat="telefone in cliente.telefones">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <input type="text " name="telefones[]" ng-model="telefone.ddd"  class="form-control" placeholder="ddd" pattern="\d{2,3}" ng-maxlength="3" size="3"/> 
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text " name="telefones[]" ng-model="telefone.numero "   class="form-control"
+                            placeholder="0 0000 0000" pattern="(\d{4,5}|\d\s?\d{4})\s?-?\s?\d{4}">
+                    </div>
+                    <div class="col-lg-3">
+                        <botao-remocao click="removerTelefone(telefone)" nome="Remover"></botao-remocao>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit " class="btn btn-primary " ng-disabled="formulario.$invalid ">
+            Salvar
+        </button>
+        <a href="/" class="btn btn-primary ">Voltar</a>
+        <hr>
+    </div>
+    <div class="col-md-6">
+        <input class="upload-file" data-max-size="2048" type="file" ng-model="cliente.imagem" >
+        <minha-imagem imagem="{{cliente.imagem}}"/>
+        {{cliente.imagem}}
+        <input type="file" fileread="uploadme.src"/>
+        <input type="text" ng-model="uploadme.src"/>
+
+    </div>
+</form>

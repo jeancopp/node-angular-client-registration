@@ -18,3 +18,4 @@ require(serverOptions.routingFile)(server);
 
 console.log("Inicializando o servidor - Porta : " + serverOptions.port);
 app.run(serverOptions.port,startFunction);
+

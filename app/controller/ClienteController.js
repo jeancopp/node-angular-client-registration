@@ -14,7 +14,6 @@ module.exports = function (app) {
     var clienteDAO = new ClienteDAO();
     app.route("/cliente")
         .get(function (req, res) {
-            
             clienteDAO.listarTodos(
                 clientes => retornoCorreto(res, clientes),
                 error => retornoErro(res, error)
@@ -22,15 +21,17 @@ module.exports = function (app) {
 
         })
         .post(function (req, res) {
+            console.log(req.body);
             var error = Cliente.isValid(req);
-            if (error) {
-                retornoErro(res, { mensagem: "Cliente inválido!", erros: error })
+            console.log(JSON.stringify(error));
+            if (error && error.length > 0) {
+                retornoErro(res, JSON.stringify({ mensagem: "Cliente inválido!", erros: error }));
             }
             else {
                 var cliente = new Cliente(req.body);
                 clienteDAO.salvar(
                     cliente,
-                    clientes => retornoCorreto(res, clientes),
+                    cliente => retornoCorreto(res, cliente),
                     error => retornoErro(res, error)
                 );
             }
@@ -44,20 +45,6 @@ module.exports = function (app) {
 
                 clienteDAO.atualizar(cliente,
                     cliente => retornoCorreto(res, cliente),
-                    error => retornoErro(res, error)
-                );
-            }
-        }).delete(function (req, res) {
-            req.checkBody('codigo', 'Codigo não informado').notEmpty().isInt();
-            var codigoInvalido = req.validationErrors();
-
-            if (codigoInvalido) {
-                retornoErro(res, { mensagem: "Cliente inválido!", erros: codigoInvalido })
-            } else {
-                console.log(req.body.codigo)
-
-                clienteDAO.remover(req.body.codigo,
-                    clientes => retornoCorreto(res, clientes),
                     error => retornoErro(res, error)
                 );
             }
@@ -77,6 +64,18 @@ module.exports = function (app) {
                     error => retornoErro(res, error)
                 );
             }
-        })
+        }).delete(function (req, res) {
+            req.checkParams('codigo', 'Codigo não informado').notEmpty().isInt();
+            var codigoInvalido = req.validationErrors();
+
+            if (codigoInvalido) {
+                retornoErro(res, { mensagem: "Cliente inválido!", erros: codigoInvalido })
+            } else {
+                clienteDAO.remover(req.params.codigo,
+                    clientes => retornoCorreto(res, clientes),
+                    error => retornoErro(res, error)
+                );
+            }
+        });
 }
 

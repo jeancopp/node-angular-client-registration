@@ -1,0 +1,28 @@
+<div class="jumbotron">
+    <h1 class="text-center">Cadastro de clientes</h1>
+</div>
+<div class="row">
+    <form>
+        <div class="input-group">
+            <span class="input-group-btn">
+                <a href="/cadastro" class="btn btn-primary">Novo Cliente</a>
+             </span>
+            <input class="form-control" type="text" name="filtro" ng-model="filtro" ng-model-options="{ debounce: 500 }" placeholder="Entre com o filtro desejado"/>
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    <meu-painel ng-show="clientes.length" ng-repeat="cliente in clientes | filter: filtro" titulo="{{cliente.nome}}" class="panel panel-default col-md-2 painel-animado">
+        <!--<minha-imagem imagem="{{cliente.imagem.url}}" titulo="{{cliente.nome}}"></minha-imagem>-->
+        <a href="cadastro/{{cliente.codigo}}" class="btn btn-primary btn-block">Editar</a>
+        <botao-remocao click="remover(cliente)" nome="Remover"></botao-remocao>
+    </meu-painel>
+</div>
+
+<div class="row">
+    <div ng-show="mensagem">
+        <div class="alert alert-danger">{{mensagem}}</div>
+    </div>
+</div>
+<!-- -->
